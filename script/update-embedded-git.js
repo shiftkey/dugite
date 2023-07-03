@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { get } = require('./utils')
 
-get(`https://api.github.com/repos/desktop/dugite-native/releases/latest`).then(
+get(`https://api.github.com/repos/shiftkey/dugite-native/releases/latest`).then(
   async response => {
     const { tag_name, assets } = JSON.parse(response)
 
@@ -16,7 +16,7 @@ get(`https://api.github.com/repos/desktop/dugite-native/releases/latest`).then(
       'linux-x64': await findLinux64BitRelease(assets),
       'linux-x86': await findLinux32BitRelease(assets),
       'linux-arm': await findLinuxARM32BitRelease(assets),
-      'linux-arm64': await findLinuxARM64BitRelease(assets)
+      'linux-arm64': await findLinuxARM64BitRelease(assets),
     }
 
     const fileContents = JSON.stringify(output, null, 2)
