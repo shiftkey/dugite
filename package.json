@@ -1,5 +1,5 @@
 {
-  "name": "dugite",
+  "name": "@shiftkey/dugite",
   "version": "2.4.0",
   "description": "Elegant bindings for Git",
   "main": "./build/lib/index.js",
@@ -24,14 +24,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/desktop/dugite.git"
+    "url": "git+https://github.com/shiftkey/dugite.git"
   },
   "author": "GitHub and contributors",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/desktop/dugite/issues"
-  },
-  "homepage": "https://github.com/desktop/dugite#readme",
+  "homepage": "https://github.com/shiftkey/dugite#readme",
   "dependencies": {
     "progress": "^2.0.3",
     "tar": "^6.1.11"
