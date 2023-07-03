@@ -2,7 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { get } = require('./utils')
 
-get(`https://api.github.com/repos/desktop/dugite-native/releases/latest`).then(
+get(`https://api.github.com/repos/shiftkey/dugite-native/releases/latest`).then(
   async response => {
     const { tag_name, assets } = JSON.parse(response)
 
@@ -13,7 +13,10 @@ get(`https://api.github.com/repos/desktop/dugite-native/releases/latest`).then(
       'win32-ia32': await findWindows32BitRelease(assets),
       'darwin-x64': await findMacOSx64BitRelease(assets),
       'darwin-arm64': await findMacOSARM64BitRelease(assets),
-      'linux-x64': await findLinux64BitRelease(assets)
+      'linux-x64': await findLinux64BitRelease(assets),
+      'linux-x86': await findLinux32BitRelease(assets),
+      'linux-arm': await findLinuxARM32BitRelease(assets),
+      'linux-arm64': await findLinuxARM64BitRelease(assets),
     }
 
     const fileContents = JSON.stringify(output, null, 2)
@@ -67,9 +70,33 @@ function findMacOSARM64BitRelease(assets) {
 }
 
 function findLinux64BitRelease(assets) {
-  const asset = assets.find(a => a.name.endsWith('-ubuntu.tar.gz'))
+  const asset = assets.find(a => a.name.endsWith('-ubuntu-x64.tar.gz'))
   if (asset == null) {
     throw new Error('Could not find Linux 64-bit archive in latest release')
+  }
+  return getDetailsForAsset(assets, asset)
+}
+
+function findLinux32BitRelease(assets) {
+  const asset = assets.find(a => a.name.endsWith('-ubuntu-x86.tar.gz'))
+  if (asset == null) {
+    throw new Error('Could not find Linux 32-bit archive in latest release')
+  }
+  return getDetailsForAsset(assets, asset)
+}
+
+function findLinuxARM64BitRelease(assets) {
+  const asset = assets.find(a => a.name.endsWith('-ubuntu-arm64.tar.gz'))
+  if (asset == null) {
+    throw new Error('Could not find Linux 64-bit archive in latest release')
+  }
+  return getDetailsForAsset(assets, asset)
+}
+
+function findLinuxARM32BitRelease(assets) {
+  const asset = assets.find(a => a.name.endsWith('-ubuntu-arm.tar.gz'))
+  if (asset == null) {
+    throw new Error('Could not find Linux 32-bit archive in latest release')
   }
   return getDetailsForAsset(assets, asset)
 }
